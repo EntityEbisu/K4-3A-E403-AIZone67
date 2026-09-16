@@ -4,7 +4,7 @@
 
 ## 👥 Thành viên nhóm & Phân công vai trò
 
-**Lớp:** 3A · **Phòng:** E403 · **Cụm:** 6 · **Track:** ____
+**Lớp:** 3A · **Phòng:** E403 · **Cụm:** 6 · **Track:** B1 - Tối ưu Trợ lý Học viên (Discord)
 
 | Họ và Tên | Mã Học Viên | Vai trò chính | Phần việc đảm nhiệm trong dự án |
 |---|---|---|---|
@@ -355,6 +355,4 @@ Dữ liệu trong `data/` là dữ liệu thật của khoá học (đã ẩn da
 5. **Không cố suy ngược danh tính** từ dữ liệu đã ẩn danh (`S####`, `T#####`, `D####`, `[HV]`, [học viên]). Riêng `discord-pack/`: người trong đó là **bạn cùng khoá** — tuyệt đối không đoán/hỏi "tin này của ai"; trích dẫn tối đa 2 câu mỗi ví dụ (xem `data/discord-pack/README.md`).
 6. Sau sự kiện, **xoá các bản sao data pack** khỏi máy cá nhân và các công cụ đã upload nếu ban tổ chức yêu cầu.
 
-Vi phạm được xử lý theo quy định của khoá và có thể ảnh hưởng trực tiếp đến điểm của nhóm.#   K 4 - 3 A - E 4 0 3 - A I Z o n e 6 7  
- #   K 4 - 3 A - E 4 0 3 - A I Z o n e 6 7  
- 
+Vi phạm được xử lý theo quy định của khoá và có thể ảnh hưởng trực tiếp đến điểm của nhóm.
