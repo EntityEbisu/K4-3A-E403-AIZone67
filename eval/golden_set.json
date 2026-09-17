@@ -2,13 +2,13 @@
   {
     "id": "TC01",
     "source_msg_id": "M83358",
-    "category": "Chatlog K4 - Logistics",
+    "category": "Chatlog K4 - Lập team",
     "input": "cho mình hỏi một team bao nhiêu bạn ?",
     "expected_action": "FOUND",
     "expected_keywords": ["3-4", "thành viên", "nhóm"],
     "ground_truth": "Thông báo onboarding M49744: Mỗi nhóm gồm 3-4 thành viên.",
     "rubric": {
-      "factuality": "Phải nêu đúng 3-4 thành viên, không đoán mò 5 hay 6 người.",
+      "factuality": "Phải nêu đúng 3-4 thành viên theo quy chế, không đoán mò 5 hay 6 người.",
       "behavior": "Trả lời trực tiếp kèm nguồn thông báo.",
       "conciseness": "Ngắn gọn dưới 3 câu."
     }
@@ -16,7 +16,7 @@
   {
     "id": "TC02",
     "source_msg_id": "M13014",
-    "category": "Chatlog K4 - Quy định",
+    "category": "Chatlog K4 - Quy định team",
     "input": "Em hỏi với ạ, khác lớp lab có chung team đc k ạ",
     "expected_action": "FOUND",
     "expected_keywords": ["lớp", "quy định", "BTC"],
@@ -71,16 +71,16 @@
   },
   {
     "id": "TC06",
-    "source_msg_id": "M73605",
-    "category": "Lớp 3: Ngoài thẩm quyền",
-    "input": "Anh ơi cho e hỏi chút ạ. Vì buổi sáng học 13h mới tan, mà chiều em có lịch bận nên em có thể xin tan sớm vào buổi sáng ko ạ?...",
+    "source_msg_id": "SURVEY_K4_01",
+    "category": "Khảo sát K4 - Thẩm quyền Daily",
+    "input": "Hôm nay em quên k nộp standup sáng thì có xin nộp bù được không ạ?",
     "expected_action": "REFUSE",
-    "expected_keywords": ["Lab Coach", "tại phòng", "trực tiếp"],
-    "ground_truth": "Xin về sớm phải trao đổi trực tiếp với Lab Coach tại phòng học.",
+    "expected_keywords": ["Lab Coach", "không có thẩm quyền", "quy định"],
+    "ground_truth": "Bot không có quyền mở lại form nộp bù hoặc xóa điểm trừ standup.",
     "rubric": {
-      "factuality": "Không tự duyệt về sớm.",
-      "behavior": "REFUSE",
-      "conciseness": "Ngắn gọn."
+      "factuality": "Không tự ý cho phép nộp bù hay hứa hẹn xóa lỗi.",
+      "behavior": "REFUSE: Nêu rõ bot không có thẩm quyền, hướng dẫn báo Lab Coach phụ trách nhóm.",
+      "conciseness": "Ngắn gọn, rõ ràng."
     }
   },
   {
@@ -99,20 +99,34 @@
   },
   {
     "id": "TC08",
-    "source_msg_id": "M03059",
-    "category": "Chatlog K4 - Support",
-    "input": "Em đang cần hỗ trợ về vấn đề giấy tờ gấp thì em liên lạc đến bộ phận nào ạ",
+    "source_msg_id": "SURVEY_K4_02",
+    "category": "Khảo sát K4 - Hạn Daily",
+    "input": "Hạn điền daily standup hằng ngày là mấy giờ vậy bot?",
     "expected_action": "FOUND",
-    "expected_keywords": ["giáo vụ", "ticket", "hotline", "hỗ trợ"],
-    "ground_truth": "Sổ tay học viên K4: Kênh tiếp nhận thủ tục giấy tờ là Ban giáo vụ / Kênh ticketing.",
+    "expected_keywords": ["trước", "hàng ngày", "daily standup"],
+    "ground_truth": "Quy định khóa K4: Daily standup điền trước 12:00 trưa hàng ngày (hoặc theo giờ quy định của BTC khoá).",
     "rubric": {
-      "factuality": "Cung cấp đúng kênh liên hệ chính thức.",
-      "behavior": "FOUND",
-      "conciseness": "Ngắn gọn."
+      "factuality": "Khớp chính xác giờ chót nộp daily theo thông báo của ban vận hành.",
+      "behavior": "FOUND: Nêu rõ giờ chót và kênh thông báo.",
+      "conciseness": "Ngắn gọn dưới 2 câu."
     }
   },
   {
     "id": "TC09",
+    "source_msg_id": "SURVEY_K4_03",
+    "category": "Khảo sát K4 - Link Daily",
+    "input": "Cho mình xin link nộp daily request hôm nay với",
+    "expected_action": "FOUND",
+    "expected_keywords": ["link", "daily", "form", "ghim"],
+    "ground_truth": "Link form Daily Standup được ghim tại kênh thông báo chính thức của Guild.",
+    "rubric": {
+      "factuality": "Cung cấp đúng link form chính thức, không đưa link giả mạo.",
+      "behavior": "FOUND",
+      "conciseness": "Đưa trực tiếp link kèm lưu ý hạn chót."
+    }
+  },
+  {
+    "id": "TC10",
     "source_msg_id": "M47011",
     "category": "Chatlog K4 - Onboarding",
     "input": "Cú pháp đổi tên trên Discord thế nào ạ?",
@@ -123,20 +137,6 @@
       "factuality": "Đúng 100% cú pháp trong thông báo.",
       "behavior": "FOUND",
       "conciseness": "Kèm ví dụ mẫu."
-    }
-  },
-  {
-    "id": "TC10",
-    "source_msg_id": "M23596",
-    "category": "Chatlog K4 - Thể lệ",
-    "input": "theo em hiểu có deliverables bắt buộc là btc ra đề bài rồi các nhóm thực hiện ạ?",
-    "expected_action": "FOUND",
-    "expected_keywords": ["BTC", "đề bài", "deliverables", "checkpoint"],
-    "ground_truth": "Quy chế Hackathon: BTC ra khung 5 track, nhóm chọn 1 track, làm prototype và nộp qua các checkpoint.",
-    "rubric": {
-      "factuality": "Khớp với thể lệ trong 01-challenge-brief.md.",
-      "behavior": "FOUND",
-      "conciseness": "Ngắn gọn."
     }
   },
   {
