@@ -1,0 +1,64 @@
+{
+    "version": "0.1-demo",
+    "purpose": "CP2/CP3 fixture schema only. Every source below is a placeholder, not an official announcement and not a source of facts.",
+    "answer_policy": "The assistant may answer only when a record has official=true, status=active, and the retrieved excerpt directly supports the response.",
+    "sources": [
+        {
+            "source_id": "OFF-LAB2",
+            "title": "[VERIFY BEFORE CP3] Official Lab 2 announcement",
+            "official": false,
+            "status": "placeholder",
+            "effective_at_vn": "[VERIFY]",
+            "expires_at_vn": "[VERIFY]",
+            "url": "[VERIFY]",
+            "excerpt": "[Replace only with the minimum verified excerpt needed for the prototype.]",
+            "allowed_intents": [
+                "lab_deadline",
+                "lab_submission"
+            ]
+        },
+        {
+            "source_id": "OFF-TEAM",
+            "title": "[VERIFY BEFORE CP3] Official team/onboarding policy",
+            "official": false,
+            "status": "placeholder",
+            "effective_at_vn": "[VERIFY]",
+            "expires_at_vn": "[VERIFY]",
+            "url": "[VERIFY]",
+            "excerpt": "[Replace with a verified excerpt.]",
+            "allowed_intents": [
+                "team_size",
+                "team_formation",
+                "cross_class_team"
+            ]
+        },
+        {
+            "source_id": "OFF-WORKSHOP",
+            "title": "[VERIFY BEFORE CP3] Official workshop policy",
+            "official": false,
+            "status": "placeholder",
+            "effective_at_vn": "[VERIFY]",
+            "expires_at_vn": "[VERIFY]",
+            "url": "[VERIFY]",
+            "excerpt": "[Replace with a verified excerpt.]",
+            "allowed_intents": [
+                "workshop_schedule",
+                "attendance"
+            ]
+        },
+        {
+            "source_id": "OFF-SUPPORT",
+            "title": "[VERIFY BEFORE CP3] Official support/ticket route",
+            "official": false,
+            "status": "placeholder",
+            "effective_at_vn": "[VERIFY]",
+            "expires_at_vn": "[VERIFY]",
+            "url": "[VERIFY]",
+            "excerpt": "[Replace with a verified excerpt.]",
+            "allowed_intents": [
+                "account_support",
+                "ticket"
+            ]
+        }
+    ]
+}
