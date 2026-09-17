@@ -1,0 +1,1924 @@
+<!DOCTYPE html>
+
+<html data-theme="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Discord Assistant Bot — AIZone67 (Cohort K4 Knowledge Engine)</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=gg+sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg-app: #1e1f22;
+    --bg-chat: #313338;
+    --bg-sidebar: #2b2d31;
+    --bg-channel-active: #35373c;
+    --bg-input: #383a40;
+    --bg-card: #2b2d31;
+    --bg-modal: #313338;
+    --text-normal: #dbdee1;
+    --text-muted: #949ba4;
+    --text-header: #f2f3f5;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-divider: rgba(255, 255, 255, 0.06);
+    --accent: #5865F2;
+    --accent-hover: #4752c4;
+    --accent-gold: #f0b232;
+    --accent-gold-bg: rgba(240, 178, 50, 0.12);
+    --accent-gold-border: rgba(240, 178, 50, 0.35);
+
+    /* 5 Verification States */
+    --badge-verified: #57f287;
+    --badge-verified-bg: rgba(87, 242, 135, 0.16);
+    --badge-verified-border: rgba(87, 242, 135, 0.4);
+
+    --badge-community: #5865f2;
+    --badge-community-bg: rgba(88, 101, 242, 0.16);
+    --badge-community-border: rgba(88, 101, 242, 0.4);
+
+    --badge-ambiguous: #fee75c;
+    --badge-ambiguous-bg: rgba(254, 231, 92, 0.16);
+    --badge-ambiguous-border: rgba(254, 231, 92, 0.4);
+
+    --badge-escalate: #f27257;
+    --badge-escalate-bg: rgba(242, 114, 87, 0.16);
+    --badge-escalate-border: rgba(242, 114, 87, 0.4);
+
+    --badge-no-answer: #ed4245;
+    --badge-no-answer-bg: rgba(237, 66, 69, 0.18);
+    --badge-no-answer-border: rgba(237, 66, 69, 0.4);
+
+    --role-btc: #faa61a;
+    --role-coach: #23a55a;
+    --role-student: #4f9cf9;
+    --role-bot: #5865f2;
+    --code-bg: #1e1f22;
+    --shadow-main: 0 16px 40px rgba(0,0,0,0.36);
+    --transition: 180ms ease;
+  }
+
+  html[data-theme="light"] {
+    --bg-app: #e3e5e8;
+    --bg-chat: #ffffff;
+    --bg-sidebar: #f2f3f5;
+    --bg-channel-active: #e0e2e5;
+    --bg-input: #ebedef;
+    --bg-card: #f2f3f5;
+    --bg-modal: #ffffff;
+    --text-normal: #313338;
+    --text-muted: #5c6470;
+    --text-header: #060607;
+    --border-subtle: rgba(0, 0, 0, 0.08);
+    --border-divider: rgba(0, 0, 0, 0.06);
+    --accent: #5865F2;
+    --accent-hover: #4752c4;
+    --accent-gold: #b37400;
+    --accent-gold-bg: rgba(240, 178, 50, 0.15);
+    --accent-gold-border: rgba(179, 116, 0, 0.4);
+
+    --badge-verified: #1e8343;
+    --badge-verified-bg: rgba(46, 125, 50, 0.14);
+    --badge-verified-border: rgba(46, 125, 50, 0.4);
+
+    --badge-community: #3b46c4;
+    --badge-community-bg: rgba(59, 70, 196, 0.12);
+    --badge-community-border: rgba(59, 70, 196, 0.4);
+
+    --badge-ambiguous: #8f6b00;
+    --badge-ambiguous-bg: rgba(254, 231, 92, 0.25);
+    --badge-ambiguous-border: rgba(143, 107, 0, 0.4);
+
+    --badge-escalate: #b33924;
+    --badge-escalate-bg: rgba(242, 114, 87, 0.16);
+    --badge-escalate-border: rgba(179, 57, 36, 0.4);
+
+    --badge-no-answer: #c0292b;
+    --badge-no-answer-bg: rgba(237, 66, 69, 0.14);
+    --badge-no-answer-border: rgba(192, 41, 43, 0.4);
+
+    --code-bg: #e3e5e8;
+    --shadow-main: 0 16px 40px rgba(0,0,0,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-app);
+    color: var(--text-normal);
+    font-family: 'gg sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    user-select: text;
+  }
+
+  /* Header */
+  .team-header-banner {
+    background: var(--bg-sidebar);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0 18px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    z-index: 50;
+  }
+  .team-brand { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .team-badge {
+    background: rgba(88, 101, 242, 0.18);
+    border: 1px solid rgba(88, 101, 242, 0.4);
+    color: var(--accent);
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .leader-pill {
+    background: var(--bg-chat);
+    border: 1px solid var(--border-subtle);
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .leader-id {
+    background: rgba(88, 101, 242, 0.15);
+    color: #4f9cf9;
+    padding: 1px 6px;
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .protocol-badge {
+    background: rgba(87, 242, 135, 0.12);
+    border: 1px solid rgba(87, 242, 135, 0.35);
+    color: #57f287;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  html[data-theme="light"] .protocol-badge {
+    background: rgba(46, 125, 50, 0.12);
+    border-color: rgba(46, 125, 50, 0.35);
+    color: #1e8343;
+  }
+
+  .utility-controls { display: flex; align-items: center; gap: 8px; }
+  .btn-util {
+    background: var(--bg-chat);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-normal);
+    border-radius: 8px;
+    height: 32px;
+    padding: 0 10px;
+    cursor: pointer;
+    font-size: 11.5px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+  }
+  .btn-util:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Main Workspace */
+  .app-layout {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* Discord Channels Sidebar */
+  .discord-sidebar {
+    width: 280px;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+  .guild-header {
+    height: 50px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .guild-title {
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--text-header);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .channels-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .channel-section-header {
+    font-size: 10.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    padding: 10px 10px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .channel-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: var(--transition);
+  }
+  .channel-item:hover { background: rgba(255,255,255,0.04); color: var(--text-normal); }
+  .channel-item.active { background: var(--bg-channel-active); color: var(--text-header); font-weight: 700; }
+  .channel-title-group { display: flex; align-items: center; gap: 7px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .channel-tag-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    background: rgba(255,255,255,0.06);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  .channel-badge-num {
+    background: #ed4245;
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 1px 6px;
+    border-radius: 10px;
+  }
+
+  /* Chat Pane */
+  .chat-view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-chat);
+    min-width: 0;
+    position: relative;
+  }
+
+  /* Chat Top Header & Filter */
+  .chat-header {
+    height: 50px;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    background: var(--bg-chat);
+    z-index: 10;
+  }
+  .chat-header-info { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .chat-header-channel { font-weight: 800; font-size: 14.5px; color: var(--text-header); display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .chat-header-desc { font-size: 12px; color: var(--text-muted); border-left: 1px solid var(--border-subtle); padding-left: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .chat-filter-pills { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .filter-pill {
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .filter-pill.active, .filter-pill:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  /* Message Stream */
+  .messages-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .channel-intro {
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-divider);
+    margin-bottom: 6px;
+  }
+  .channel-intro-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--bg-sidebar);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+  }
+  .channel-intro h2 { font-size: 18px; font-weight: 800; color: var(--text-header); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .channel-intro p { font-size: 12.5px; color: var(--text-muted); }
+
+  /* Message Items */
+  .message-wrap {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 6px 8px;
+    border-radius: 8px;
+    transition: background 120ms ease;
+  }
+  .message-wrap:hover { background: rgba(0,0,0,0.06); }
+  html[data-theme="dark"] .message-wrap:hover { background: rgba(255,255,255,0.02); }
+
+  /* Replying context */
+  .reply-context {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    margin-left: 46px;
+    position: relative;
+  }
+  .reply-context::before {
+    content: "";
+    position: absolute;
+    left: -22px;
+    top: 8px;
+    width: 16px;
+    height: 9px;
+    border-left: 2px solid #4e5058;
+    border-top: 2px solid #4e5058;
+    border-top-left-radius: 6px;
+  }
+
+  .message-row { display: flex; gap: 12px; align-items: flex-start; }
+  .avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    font-size: 13px;
+    color: white;
+    user-select: none;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .avatar-btc { background: #faa61a; }
+  .avatar-coach { background: #23a55a; }
+  .avatar-student { background: #5865f2; }
+  .avatar-bot { background: linear-gradient(135deg, #5865F2, #eb459e); font-family: 'Inter', sans-serif; font-size: 16px; }
+  .avatar-user { background: #3ba55d; }
+
+  .message-content { flex: 1; min-width: 0; }
+  .author-line { display: flex; align-items: center; gap: 7px; margin-bottom: 3px; flex-wrap: wrap; }
+  .author-id-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800;
+    font-size: 13.5px;
+    color: var(--text-header);
+    cursor: pointer;
+  }
+  .author-id-code:hover { text-decoration: underline; }
+  .role-badge {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 1px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .role-btc { background: rgba(250, 166, 26, 0.2); color: #faa61a; border: 1px solid rgba(250, 166, 26, 0.4); }
+  .role-coach { background: rgba(35, 165, 90, 0.2); color: #23a55a; border: 1px solid rgba(35, 165, 90, 0.4); }
+  .role-student { background: rgba(79, 156, 249, 0.2); color: #4f9cf9; border: 1px solid rgba(79, 156, 249, 0.4); }
+  .role-bot { background: #5865f2; color: #ffffff; }
+
+  .msg-time { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+  .msg-id { font-size: 10.5px; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); opacity: 0.75; }
+
+  .msg-text {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--text-normal);
+    word-break: break-word;
+  }
+
+  /* Tag highlighting for mentions and student tokens */
+  .mention-tag {
+    background: rgba(88, 101, 242, 0.2);
+    color: #c9cdfb;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  .token-hv {
+    background: rgba(79, 156, 249, 0.18);
+    color: #4f9cf9;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  /* Official Announcement Card */
+  .official-card {
+    margin-top: 6px;
+    border-left: 4px solid var(--accent-gold);
+    background: var(--accent-gold-bg);
+    border-radius: 8px;
+    padding: 10px 12px;
+    border-right: 1px solid var(--accent-gold-border);
+    border-top: 1px solid var(--accent-gold-border);
+    border-bottom: 1px solid var(--accent-gold-border);
+  }
+  .official-card-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: var(--accent-gold);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  /* Assistant Answer Box */
+  .assistant-response-box {
+    margin-top: 8px;
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .ai-meta-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-divider);
+    flex-wrap: wrap;
+  }
+  .ai-status-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  /* 5 Verification State Badges */
+  .state-badge {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 99px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .state-badge.VERIFIED_OFFICIAL {
+    background: var(--badge-verified-bg);
+    color: var(--badge-verified);
+    border: 1px solid var(--badge-verified-border);
+  }
+  .state-badge.COMMUNITY_ANSWER {
+    background: var(--badge-community-bg);
+    color: var(--badge-community);
+    border: 1px solid var(--badge-community-border);
+  }
+  .state-badge.AMBIGUOUS_LOW_CONF {
+    background: var(--badge-ambiguous-bg);
+    color: var(--badge-ambiguous);
+    border: 1px solid var(--badge-ambiguous-border);
+  }
+  .state-badge.ESCALATE_TA {
+    background: var(--badge-escalate-bg);
+    color: var(--badge-escalate);
+    border: 1px solid var(--badge-escalate-border);
+  }
+  .state-badge.NO_OFFICIAL_ANSWER {
+    background: var(--badge-no-answer-bg);
+    color: var(--badge-no-answer);
+    border: 1px solid var(--badge-no-answer-border);
+  }
+
+  .confidence-pill {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-normal);
+  }
+
+  .source-attribution-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-chat);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-normal);
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: var(--transition);
+  }
+  .source-attribution-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Escalate Action Box */
+  .escalate-box {
+    margin-top: 10px;
+    background: rgba(242, 114, 87, 0.08);
+    border: 1px dashed rgba(242, 114, 87, 0.4);
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .escalate-info { font-size: 12px; color: var(--text-normal); }
+  .escalate-mail { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #f27257; }
+  .btn-ticket {
+    background: #f27257;
+    color: white;
+    border: none;
+    font-size: 11.5px;
+    font-weight: 800;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .btn-ticket:hover { opacity: 0.9; }
+
+  /* Code snippet block */
+  .code-block {
+    margin: 8px 0;
+    background: var(--code-bg);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #57f287;
+    overflow-x: auto;
+  }
+
+  /* Composer & Chips */
+  .chat-composer {
+    flex-shrink: 0;
+    padding: 10px 16px 14px;
+    background: var(--bg-chat);
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .chips-container {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 2px;
+    scrollbar-width: thin;
+  }
+  .chips-container::-webkit-scrollbar { height: 4px; }
+  .chips-container::-webkit-scrollbar-thumb { background: var(--border-subtle); border-radius: 4px; }
+
+  .quick-chip {
+    flex-shrink: 0;
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-normal);
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 7px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: var(--transition);
+  }
+  .quick-chip:hover { border-color: var(--accent); color: var(--accent); background: var(--bg-card); }
+
+  .input-bar {
+    display: flex;
+    align-items: center;
+    background: var(--bg-input);
+    border-radius: 8px;
+    padding: 0 12px;
+    gap: 8px;
+    border: 1px solid transparent;
+    transition: var(--transition);
+  }
+  .input-bar:focus-within { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.2); }
+  .input-bar input {
+    flex: 1;
+    height: 42px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-normal);
+    font-size: 13.5px;
+  }
+  .input-bar input::placeholder { color: var(--text-muted); }
+  .btn-send {
+    background: var(--accent);
+    color: white;
+    border: none;
+    height: 32px;
+    padding: 0 14px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 12.5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background var(--transition);
+  }
+  .btn-send:hover { background: var(--accent-hover); }
+
+  /* Typing Dot Indicator */
+  .typing-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    background: var(--bg-sidebar);
+    border-radius: 12px;
+    width: fit-content;
+  }
+  .typing-indicator span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    animation: pulse 1.2s infinite ease-in-out;
+  }
+  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes pulse {
+    0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+    40% { transform: scale(1.1); opacity: 1; }
+  }
+
+  /* Ground Truth Modal */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal-card {
+    background: var(--bg-modal);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    width: min(640px, 100%);
+    box-shadow: var(--shadow-main);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: modalScale 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes modalScale {
+    from { opacity: 0; transform: scale(0.96) translateY(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .modal-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-header h3 { font-size: 15px; font-weight: 800; color: var(--text-header); display: flex; align-items: center; gap: 8px; }
+  .btn-close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 6px;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+  }
+  .btn-close:hover { background: rgba(255,255,255,0.08); color: var(--text-header); }
+  .modal-body { padding: 18px; overflow-y: auto; max-height: 75vh; }
+  .evidence-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .original-box {
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 14px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    font-size: 12px;
+  }
+  .meta-cell {
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-subtle);
+    padding: 8px 10px;
+    border-radius: 6px;
+  }
+  .meta-cell-label { color: var(--text-muted); margin-bottom: 2px; font-size: 11px; }
+  .meta-cell-val { font-weight: 700; color: var(--text-header); font-family: 'JetBrains Mono', monospace; font-size: 11.5px; }
+
+  /* Footer */
+  .site-footer {
+    background: var(--bg-sidebar);
+    border-top: 1px solid var(--border-subtle);
+    padding: 6px 18px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    font-size: 11.5px;
+  }
+  .footer-left { display: flex; align-items: center; gap: 8px; }
+  .footer-right { display: flex; align-items: center; gap: 12px; color: var(--text-muted); }
+
+  @media (max-width: 860px) {
+    .discord-sidebar { display: none; }
+    .chat-header-desc { display: none; }
+    .protocol-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+<!-- Header Banner -->
+<header class="team-header-banner">
+<div class="team-brand">
+<div class="team-badge">
+<span class="material-symbols-outlined" style="font-size:17px;">rocket_launch</span>
+<span>AIZone67</span>
+</div>
+<div class="leader-pill">
+<span id="lblLeader" style="color:var(--text-muted);">Nhóm trưởng:</span>
+<strong style="color:var(--text-header);">Nguyễn Trọng Minh</strong>
+<span class="leader-id">2A202602496</span>
+</div>
+<div class="protocol-badge" title="Anonymization and Data Dictionary Protocol Enforced">
+<span class="material-symbols-outlined" style="font-size:15px;">shield</span>
+<span>🛡️ DATA_DICTIONARY.md Anonymized Feed</span>
+</div>
+</div>
+<div class="utility-controls">
+<button class="btn-util" id="langSwitchBtn" title="Switch Language">
+<span class="material-symbols-outlined" style="font-size:15px;">translate</span>
+<span id="langDisplay">VI / EN</span>
+</button>
+<button class="btn-util" id="themeToggleBtn" title="Toggle Theme">
+<span class="material-symbols-outlined" id="themeIcon" style="font-size:15px;">light_mode</span>
+<span id="themeText">Light</span>
+</button>
+</div>
+</header>
+<!-- Main Workspace -->
+<div class="app-layout">
+<!-- Discord Sidebar -->
+<aside class="discord-sidebar">
+<div class="guild-header">
+<div class="guild-title">
+<span class="material-symbols-outlined" style="color:var(--accent); font-size:19px;">hub</span>
+<span>AI K4 — Build Phase</span>
+</div>
+<span class="material-symbols-outlined" style="color:var(--text-muted); font-size:17px;">expand_more</span>
+</div>
+<div class="channels-list">
+<div class="channel-section-header">
+<span id="secAnnouncements">Official Channels</span>
+<span class="material-symbols-outlined" style="font-size:13px;">campaign</span>
+</div>
+<button class="channel-item active" data-channel="channel_03">
+<div class="channel-title-group">
+<span style="font-size:14px;">📢</span>
+<span class="channel-tag-id">channel_03</span>
+<span style="font-size:12px; color:var(--text-muted);">· Onboarding</span>
+</div>
+<span class="channel-badge-num">6</span>
+</button>
+<button class="channel-item" data-channel="channel_06">
+<div class="channel-title-group">
+<span style="font-size:14px;">📌</span>
+<span class="channel-tag-id">channel_06</span>
+<span style="font-size:12px; color:var(--text-muted);">· Định danh</span>
+</div>
+<span class="channel-badge-num">3</span>
+</button>
+<div class="channel-section-header" style="margin-top:8px;">
+<span id="secSupport">Workspace &amp; Support</span>
+<span class="material-symbols-outlined" style="font-size:13px;">forum</span>
+</div>
+<button class="channel-item" data-channel="channel_02">
+<div class="channel-title-group">
+<span style="font-size:14px;">💬</span>
+<span class="channel-tag-id">channel_02</span>
+<span style="font-size:12px; color:var(--text-muted);">· Hỏi đáp Q&amp;A</span>
+</div>
+<span class="channel-badge-num">8</span>
+</button>
+<button class="channel-item" data-channel="channel_08">
+<div class="channel-title-group">
+<span style="font-size:14px;">🛠️</span>
+<span class="channel-tag-id">channel_08</span>
+<span style="font-size:12px; color:var(--text-muted);">· Lab CVAT</span>
+</div>
+<span class="channel-badge-num">6</span>
+</button>
+<button class="channel-item" data-channel="channel_10">
+<div class="channel-title-group">
+<span style="font-size:14px;">🤖</span>
+<span class="channel-tag-id">channel_10</span>
+<span style="font-size:12px; color:var(--text-muted);">· Bot XP &amp; Daily</span>
+</div>
+<span class="channel-badge-num">5</span>
+</button>
+</div>
+</aside>
+<!-- Chat View -->
+<main class="chat-view">
+<!-- Channel Header -->
+<div class="chat-header">
+<div class="chat-header-info">
+<div class="chat-header-channel">
+<span class="material-symbols-outlined" style="font-size:18px; color:var(--text-muted);">tag</span>
+<span id="activeChannelHeader">channel_03</span>
+</div>
+<div class="chat-header-desc" id="activeChannelDesc">
+          Thông báo Onboarding &amp; Build Phase chính thức từ BTC
+        </div>
+</div>
+<!-- Filters -->
+<div class="chat-filter-pills">
+<button class="filter-pill active" data-filter="all" id="filterAll">Tất cả tin nhắn</button>
+<button class="filter-pill" data-filter="official" id="filterOfficial">📌 Chỉ Thông Báo BTC</button>
+<button class="filter-pill" data-filter="qa" id="filterQA">💬 Q&amp;A Học viên</button>
+</div>
+</div>
+<!-- Messages Container -->
+<div class="messages-container" id="messagesContainer">
+<!-- Dynamic messages injected via script -->
+</div>
+<!-- Composer -->
+<div class="chat-composer">
+<!-- Quick Chips -->
+<div class="chips-container" id="chipsRow">
+<!-- Injected via JS -->
+</div>
+<!-- Chat input -->
+<div class="input-bar">
+<span class="material-symbols-outlined" style="color:var(--text-muted); font-size:19px;">add_circle</span>
+<input autocomplete="off" id="queryInput" placeholder="Hỏi trợ lý bot Discord hoặc click các câu hỏi mẫu bên dưới..." type="text"/>
+<button class="btn-send" id="sendQueryBtn">
+<span>Gửi</span>
+<span class="material-symbols-outlined" style="font-size:15px;">send</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="site-footer">
+<div class="footer-left">
+<strong style="color:var(--text-header);">AIZone67 Knowledge Engine</strong>
+<span style="color:var(--text-muted);">|</span>
+<span id="footerDesc">Bot-authoritative (is_bot=True) anonymized Discord-pack excerpts · local CP3 demo</span>
+</div>
+<div class="footer-right">
+<span>MSSV: <strong style="color:var(--text-header);">2A202602496</strong></span>
+<span>•</span>
+<span>Nhóm trưởng: <strong style="color:var(--text-header);">Nguyễn Trọng Minh</strong></span>
+</div>
+</footer>
+<!-- Ground Truth Modal -->
+<div class="modal-backdrop" id="sourceModal">
+<div class="modal-card">
+<div class="modal-header">
+<h3>
+<span class="material-symbols-outlined" style="color:var(--accent); font-size:19px;">verified_user</span>
+<span id="modalTitle">Xác thực nguồn tin gốc (Ground Truth Grounding)</span>
+</h3>
+<button class="btn-close" id="closeModalBtn">×</button>
+</div>
+<div class="modal-body">
+<div class="evidence-header">
+<div style="display:flex; align-items:center; gap:8px;">
+<span style="font-size:12px; color:var(--text-muted);">Message ID:</span>
+<code id="evidenceId" style="font-weight:700; color:var(--accent); font-family:JetBrains Mono;">M49744</code>
+</div>
+<span class="state-badge VERIFIED_OFFICIAL" id="evidenceTrust">VERIFIED_OFFICIAL</span>
+</div>
+<div class="original-box" id="evidenceText">
+        Nội dung trích xuất nguyên bản đã khử định danh...
+      </div>
+<div class="meta-grid">
+<div class="meta-cell">
+<div class="meta-cell-label" id="lblAuthorMeta">Author Masked ID</div>
+<div class="meta-cell-val" id="evidenceAuthor">D9617 [BTC]</div>
+</div>
+<div class="meta-cell">
+<div class="meta-cell-label" id="lblChannelMeta">Channel Identifier</div>
+<div class="meta-cell-val" id="evidenceChannel">#channel_03</div>
+</div>
+<div class="meta-cell">
+<div class="meta-cell-label" id="lblGuildMeta">Guild / Cohort</div>
+<div class="meta-cell-val" id="evidenceGuild">K4-L2-3</div>
+</div>
+<div class="meta-cell">
+<div class="meta-cell-label" id="lblTimeMeta">Timestamp (Recorded)</div>
+<div class="meta-cell-val" id="evidenceTimestamp">2026-09-12 11:08:45</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+// -------------------------------------------------------------
+// SANITIZED & ANONYMIZED DATASET ACCORDING TO DATA_DICTIONARY.md
+// Authors: D8938, D9617, D3694, D7688, D4964, D2443, D3082, D6587, D7105, D7235, BOT
+// Learners referenced as [HV], Mentions masked [@D####], [@BOT], [@everyone]
+// Channels: channel_03, channel_06, channel_02, channel_08, channel_10
+// -------------------------------------------------------------
+const k4Database = [
+  // --- channel_03: Official Announcements ---
+  {
+    id: "M49744",
+    channel: "channel_03",
+    guild: "K4-L2-3",
+    author: "D9617",
+    role: "btc",
+    timestamp: "2026-09-12 11:08",
+    type: "official",
+    text: "📢 @everyone THÔNG BÁO HOÀN THIỆN CÁC BƯỚC ONBOARDING VÀO CHƯƠNG TRÌNH\nCác [HV] vui lòng thực hiện đúng 5 bước kích hoạt Phoenix Platform, join tổ chức và clone base template. Hạn chót ghép đội tự do: 21:00 ngày 13/09/2026.",
+    text_en: "📢 @everyone ANNOUNCEMENT: COMPLETE ONBOARDING STEPS INTO THE PROGRAM\nAll [HV] must complete 5 initial steps on Phoenix Platform (activate account, join organization, clone base template). Open team formation deadline: 21:00 Sep 13, 2026.",
+    intent: "phoenix_onboarding",
+    trust: "VERIFIED_OFFICIAL"
+  },
+  {
+    id: "M01982",
+    channel: "channel_03",
+    guild: "K4-L2-3",
+    author: "D8938",
+    role: "btc",
+    timestamp: "2026-09-13 08:30",
+    type: "official",
+    text: "🚩 Gate 1 Deliverables: Hạn nộp sản phẩm giai đoạn 1 là 23:59 ngày 20/09/2026. Bộ sản phẩm gồm: AI Logbook cập nhật, Video demo kiến trúc dữ liệu và link Github repo clean branch.",
+    text_en: "🚩 Gate 1 Deliverables: Phase 1 submission deadline is 23:59 Sep 20, 2026. Required: Updated AI Logbook, architecture demo video, and clean GitHub repo link.",
+    intent: "gate1_deadline",
+    trust: "VERIFIED_OFFICIAL"
+  },
+  {
+    id: "M09449",
+    channel: "channel_03",
+    guild: "K4-L2-3",
+    author: "D9617",
+    role: "btc",
+    timestamp: "2026-09-13 10:45",
+    type: "official",
+    text: "📚 Quy tắc Topic Bank: Mỗi đề tài nghiên cứu chỉ tối đa 2 nhóm đăng ký trùng đề tài. Hệ thống ưu tiên theo timestamp ghi nhận trên form submit.",
+    text_en: "📚 Topic Bank Rule: A maximum of 2 teams may select the same research topic. Priority is determined strictly by Google Form timestamp.",
+    intent: "topic_bank_rule",
+    trust: "VERIFIED_OFFICIAL"
+  },
+  {
+    id: "M80709",
+    channel: "channel_03",
+    guild: "K4-L2-3",
+    author: "D8938",
+    role: "btc",
+    timestamp: "2026-09-13 16:20",
+    type: "official",
+    text: "📬 Kênh tiếp nhận hỗ trợ hành chính khẩn cấp: Đối với các đơn bảo lưu hoặc giấy tờ xác nhận học vụ có dấu mộc nhà trường, vui lòng gửi về email chính thức: AIthucchien@vinuni.edu.vn.",
+    text_en: "📬 Urgent Administrative Support: Requests regarding deferrals or stamped academic documents must be emailed to: AIthucchien@vinuni.edu.vn.",
+    intent: "admin_email",
+    trust: "VERIFIED_OFFICIAL"
+  },
+
+  // --- channel_06: Coordination & Naming Convention ---
+  {
+    id: "M47011",
+    channel: "channel_06",
+    guild: "K4-L2-3",
+    author: "D8938",
+    role: "btc",
+    timestamp: "2026-09-12 09:39",
+    type: "official",
+    text: "📢 @everyone Để BTC và các Lab Coach thuận tiện đối soát danh sách, các bạn vui lòng đổi tên hiển thị Discord theo đúng cú pháp:\n[Mã Nhóm] - Họ và tên - [5 số cuối mã sinh viên]. Ví dụ: T001 - [HV] - [MSSV_5SO]. Hạn chót trước 18:00 hôm nay.",
+    text_en: "📢 @everyone For BTC and Lab Coaches to cross-check records, please rename your Discord display name following syntax:\n[Team Code] - Full Name - [Last 5 digits of Student ID]. Example: T001 - [HV] - [MSSV_5SO]. Deadline: before 18:00 today.",
+    intent: "naming_syntax",
+    trust: "VERIFIED_OFFICIAL"
+  },
+  {
+    id: "M12505",
+    channel: "channel_06",
+    guild: "K4-L2-3",
+    author: "D8938",
+    role: "btc",
+    timestamp: "2026-09-12 14:15",
+    type: "official",
+    text: "⚠️ Nhắc nhở ghép team tự do: Các [HV] còn lại vui lòng kiểm tra danh sách ghép nhóm trên portal trước 20:00 tối nay để BTC chốt danh sách đội chính thức.",
+    text_en: "⚠️ Team formation reminder: All unassigned [HV] please verify the pairing sheet before 20:00 tonight so BTC can finalize official squads.",
+    intent: "team_formation",
+    trust: "VERIFIED_OFFICIAL"
+  },
+  {
+    id: "M12506",
+    channel: "channel_06",
+    guild: "K4-L2-3",
+    author: "D7688",
+    role: "student",
+    timestamp: "2026-09-12 14:22",
+    replyTo: "M12505",
+    replyUser: "D8938",
+    type: "qa",
+    text: "Cho em hỏi trường hợp 2 bạn khác level (ví dụ L2 và L3) có được chung team không ạ?",
+    text_en: "Can two learners with different proficiency levels (e.g. L2 and L3) team up together?",
+    intent: "team_level_rule",
+    trust: "COMMUNITY_ANSWER"
+  },
+  {
+    id: "M12507",
+    channel: "channel_06",
+    guild: "K4-L2-3",
+    author: "D8938",
+    role: "btc",
+    timestamp: "2026-09-12 14:25",
+    replyTo: "M12506",
+    replyUser: "D7688",
+    type: "official",
+    text: "Quy định phân ban: Các [HV] trong cùng một đội bắt buộc phải thuộc cùng Level đã được xếp loại để đảm bảo tiến độ đồ án Gate.",
+    text_en: "Cohort guideline: All [HV] in a squad must belong to the exact same classified Level to ensure balanced project pace.",
+    intent: "team_level_rule",
+    trust: "VERIFIED_OFFICIAL"
+  },
+
+  // --- channel_02: Q&A Support & Procedures ---
+  {
+    id: "M03059",
+    channel: "channel_02",
+    guild: "K4-L2-3",
+    author: "D4964",
+    role: "student",
+    timestamp: "2026-09-13 14:30",
+    type: "qa",
+    text: "Em cần xin giấy xác nhận đang tham gia Cohort K4 có mộc đỏ để bổ túc hồ sơ hoãn nghĩa vụ quân sự tại địa phương, em gửi email nào để được hỗ trợ ạ?",
+    text_en: "I need an official stamped verification of enrollment in Cohort K4 for military deferment papers at local office. Which email should I contact?",
+    intent: "urgent_paperwork",
+    trust: "COMMUNITY_ANSWER"
+  },
+  {
+    id: "M81088",
+    channel: "channel_02",
+    guild: "K4-L2-3",
+    author: "D3694",
+    role: "coach",
+    timestamp: "2026-09-13 14:35",
+    replyTo: "M03059",
+    replyUser: "D4964",
+    type: "qa",
+    text: "Bạn [@D4964] gửi mail trực tiếp tới AIthucchien@vinuni.edu.vn kèm ảnh chụp CCCD và mẫu đơn cần đóng dấu. Bạn nhớ báo lại với anh [HV] điều phối để duyệt nhé.",
+    text_en: "Learner [@D4964] please email directly to AIthucchien@vinuni.edu.vn with scanned ID and university form. Notify the cohort coordinator to expedite approval.",
+    intent: "urgent_paperwork",
+    trust: "COMMUNITY_ANSWER"
+  },
+  {
+    id: "M81089",
+    channel: "channel_02",
+    guild: "K4-L2-3",
+    author: "D2443",
+    role: "student",
+    timestamp: "2026-09-13 14:38",
+    replyTo: "M03059",
+    replyUser: "D4964",
+    type: "qa",
+    text: "Đúng rồi bạn, hôm trước mình xin giấy xác nhận thực tập gửi mail tầm 24h là các anh chị BTC rep và gửi file scan có mộc.",
+    text_en: "Confirmed, I previously requested an internship confirmation and BTC staff responded with a signed/stamped scan within 24h.",
+    intent: "urgent_paperwork",
+    trust: "COMMUNITY_ANSWER"
+  },
+  {
+    id: "M63574",
+    channel: "channel_02",
+    guild: "K4-L2-3",
+    author: "D3082",
+    role: "student",
+    timestamp: "2026-09-14 08:10",
+    type: "qa",
+    text: "Các buổi Workshop Build Phase cuối tuần có tính vào số buổi vắng tối đa trên lớp môn chính quy ở trường không anh chị?",
+    text_en: "Do weekend Build Phase workshop absences count towards maximum absence limits in regular university courses?",
+    intent: "workshop_attendance_rule",
+    trust: "COMMUNITY_ANSWER"
+  },
+  {
+    id: "M43132",
+    channel: "channel_02",
+    guild: "K4-L2-3",
+    author: "D3694",
+    role: "coach",
+    timestamp: "2026-09-14 08:25",
+    replyTo: "M63574",
+    replyUser: "D3082",
+    type: "qa",
+    text: "Workshop Build Phase là hoạt động tăng cường kỹ năng thực chiến của chương trình, không tính vào số buổi nghỉ trên lớp chính quy của trường. Tuy nhiên [HV] phải tham gia tối thiểu 80% để đủ điều kiện xét Gate.",
+    text_en: "Build Phase workshops are hands-on project training and do NOT affect university class attendance records. However [HV] must reach 80% attendance for Gate evaluation.",
+    intent: "workshop_attendance_rule",
+    trust: "COMMUNITY_ANSWER"
+  },
+
+  // --- channel_08: CVAT & Docker Technical Support ---
+  {
+    id: "M12802",
+    channel: "channel_08",
+    guild: "K4-L2-3",
+    author: "D7105",
+    role: "student",
+    timestamp: "2026-09-13 15:30",
+    type: "qa",
+    text: "Em setup CVAT bằng docker compose nhưng container cvat_opa bị exit status (500), không login được web UI thì xử lý thế nào ạ?",
+    text_en: "I set up CVAT via docker compose but cvat_opa container exited with 500 error, blocking web UI login. How should I fix this?",
+    intent: "cvat_opa_error",
+    trust: "COMMUNITY_ANSWER"
+  },
+  {
+    id: "M51326",
+    channel: "channel_08",
+    guild: "K4-L2-3",
+    author: "D6587",
+    role: "coach",
+    timestamp: "2026-09-13 15:42",
+    replyTo: "M12802",
+    replyUser: "D7105",
+    type: "qa",
+    text: "Lỗi OPA healthcheck 500 thường do Docker memory dưới 6GB hoặc OPA khởi động trước cvat_server. Bạn chạy tuần tự các lệnh sau:\n`docker compose down -v`\n`docker compose up -d --wait`\nChờ 45s rồi khởi tạo user:\n`docker exec -it cvat_server python manage.py createsuperuser`",
+    text_en: "CVAT OPA 500 healthcheck happens when Docker has under 6GB RAM or starts out of order. Run sequentially:\n`docker compose down -v`\n`docker compose up -d --wait`\nWait 45s, then create superuser:\n`docker exec -it cvat_server python manage.py createsuperuser`",
+    intent: "cvat_opa_error",
+    trust: "COMMUNITY_ANSWER"
+  },
+  {
+    id: "M30224",
+    channel: "channel_08",
+    guild: "K4-L2-3",
+    author: "D7105",
+    role: "student",
+    timestamp: "2026-09-13 15:55",
+    replyTo: "M51326",
+    replyUser: "D6587",
+    type: "qa",
+    text: "Em làm theo lệnh của Coach [@D6587] đã vào được UI rồi ạ. Cảm ơn Coach rất nhiều!",
+    text_en: "I executed Coach [@D6587]'s commands and the UI is working smoothly now. Thank you so much!",
+    intent: "cvat_opa_error",
+    trust: "COMMUNITY_ANSWER"
+  },
+
+  // --- channel_10: Bot Q&A, XP & Standup ---
+  {
+    id: "M91153",
+    channel: "channel_10",
+    guild: "K4-L2-3",
+    author: "D7688",
+    role: "student",
+    timestamp: "2026-09-13 09:12",
+    type: "qa",
+    text: "Khung giờ nộp Daily Standup để bot cộng full XP là mấy giờ ạ? Sau 10h sáng submit có được điểm không?",
+    text_en: "What is the Daily Standup submission window to receive full XP? Does submitting after 10 AM grant any score?",
+    intent: "standup_window",
+    trust: "COMMUNITY_ANSWER"
+  },
+  {
+    id: "M78917",
+    channel: "channel_10",
+    guild: "K4-L2-3",
+    author: "BOT",
+    role: "bot",
+    timestamp: "2026-09-13 09:13",
+    replyTo: "M91153",
+    replyUser: "D7688",
+    type: "qa",
+    text: "🤖 [Bot Auto-Reply]: Khung giờ Daily Standup tính full XP là từ 00:00 đến 10:00 sáng mỗi ngày. Sau 10:00 sáng hệ thống tự động khóa sổ XP của ngày đó.",
+    text_en: "🤖 [Bot Auto-Reply]: The Daily Standup window for 100% XP is strictly 00:00 to 10:00 AM daily. After 10:00 AM, the system locks daily XP point logs.",
+    intent: "standup_window",
+    trust: "COMMUNITY_ANSWER"
+  },
+  {
+    id: "M43912",
+    channel: "channel_10",
+    guild: "K4-L2-3",
+    author: "D7235",
+    role: "student",
+    timestamp: "2026-09-13 16:00",
+    type: "qa",
+    text: "Hạn chót các nhóm đăng ký lịch Mentor Duty hàng tuần là khi nào vậy [@BOT]?",
+    text_en: "When is the weekly team registration deadline for Mentor Duty [@BOT]?",
+    intent: "mentor_duty",
+    trust: "COMMUNITY_ANSWER"
+  },
+  {
+    id: "M57830",
+    channel: "channel_10",
+    guild: "K4-L2-3",
+    author: "BOT",
+    role: "bot",
+    timestamp: "2026-09-13 16:01",
+    replyTo: "M43912",
+    replyUser: "D7235",
+    type: "qa",
+    text: "🤖 Lịch đăng ký Mentor Duty: Các nhóm hoàn tất đăng ký trước 12:00 trưa Thứ 4 hàng tuần trên Dashboard. Lab Coach sẽ duyệt slot trong chiều cùng ngày.",
+    text_en: "🤖 Mentor Duty Schedule: Teams must reserve their slots before 12:00 PM every Wednesday on Dashboard. Coaches finalize slot approvals that afternoon.",
+    intent: "mentor_duty",
+    trust: "COMMUNITY_ANSWER"
+  }
+];
+
+// -------------------------------------------------------------
+// BILINGUAL LOCALIZATION STRINGS
+// -------------------------------------------------------------
+const uiText = {
+  vi: {
+    lblLeader: "Nhóm trưởng:",
+    secAnnouncements: "KÊNH CHÍNH THỨC (BTC)",
+    secSupport: "KHÔNG GIAN LÀM VIỆC & LAB",
+    filterAll: "Tất cả tin nhắn",
+    filterOfficial: "📌 Chỉ Thông Báo BTC",
+    filterQA: "💬 Q&A Học viên",
+    inputPlaceholder: "Hỏi trợ lý bot Discord hoặc click các câu hỏi mẫu bên dưới...",
+    sendBtn: "Gửi",
+    officialAnnouncement: "THÔNG BÁO CHÍNH THỨC TỪ BAN TỔ CHỨC",
+    relyPrefix: "Đang trả lời",
+    botRole: "AI ASSISTANT",
+    viewSource: "Xem tin nhắn gốc đối chiếu",
+    ticketActionBtn: "Tạo Ticket Hỗ Trợ (/ticket create)",
+    ticketCreatedAlert: "Ticket đã được khởi tạo! Điều phối viên K4 sẽ tiếp nhận và phản hồi qua email AIthucchien@vinuni.edu.vn.",
+    footerDesc: "Mô phỏng Trợ lý Discord K4 đối chiếu từ tập dữ liệu k4_messages.csv tuân thủ DATA_DICTIONARY.md",
+    channelDescs: {
+      "channel_03": "Thông báo Onboarding & Build Phase chính thức từ BTC",
+      "channel_06": "Kênh điều phối định danh, cú pháp đặt tên và chốt danh sách đội",
+      "channel_02": "Hỏi đáp & Trao đổi Onboarding, thủ tục hành chính và giấy tờ",
+      "channel_08": "Hỗ trợ kỹ thuật Lab CVAT, Docker OPA 500 và môi trường GPU",
+      "channel_10": "Hỏi đáp Trợ lý Bot, mốc tích lũy XP và Daily Standup"
+    },
+    chips: [
+      { key: "naming", label: "Cú pháp đặt tên Discord", query: "Cú pháp đổi tên Discord quy định thế nào?" },
+      { key: "phoenix", label: "Hạn nộp và 5 bước Onboarding Phoenix", query: "5 bước Onboarding Phoenix và hạn chót ghép đội?" },
+      { key: "standup", label: "Khung giờ Daily Standup nhận XP", query: "Khung giờ nộp Daily Standup nhận XP là khi nào?" },
+      { key: "cvat", label: "Lỗi CVAT OPA 500 Docker", query: "Cách sửa lỗi CVAT container OPA healthcheck 500?" },
+      { key: "attendance", label: "Điểm danh Workshop có tính vào vắng trên lớp không?", query: "Điểm danh Workshop Build Phase có tính vào vắng trên lớp không?" },
+      { key: "paperwork", label: "Cần giấy tờ xác nhận gấp liên hệ ai?", query: "Cần xin giấy xác nhận có mộc đỏ hoãn nghĩa vụ thì gửi ai?" },
+      { key: "team_level", label: "Khác level có chung team được không?", query: "Hai bạn khác level có được chung team không?" },
+      { key: "outscope", label: "Hỏi ngoài phạm vi (Suất ăn trưa)", query: "Trưa nay ở canteen trường có những món gì ngon?" }
+    ]
+  },
+  en: {
+    lblLeader: "Team Leader:",
+    secAnnouncements: "OFFICIAL CHANNELS",
+    secSupport: "WORKSPACE & LABS",
+    filterAll: "All Messages",
+    filterOfficial: "📌 BTC Announcements Only",
+    filterQA: "💬 Student Q&A",
+    inputPlaceholder: "Ask the Discord Assistant or select sample queries below...",
+    sendBtn: "Send",
+    officialAnnouncement: "OFFICIAL BTC ANNOUNCEMENT",
+    relyPrefix: "Replying to",
+    botRole: "AI ASSISTANT",
+    viewSource: "Verify Ground Truth Source",
+    ticketActionBtn: "Open Support Ticket (/ticket create)",
+    ticketCreatedAlert: "Support ticket dispatched! Cohort coordinator will review and reply via AIthucchien@vinuni.edu.vn.",
+    footerDesc: "Discord Assistant Bot Simulation mapped from authentic k4_messages.csv adhering to DATA_DICTIONARY.md",
+    channelDescs: {
+      "channel_03": "Official Onboarding & Build Phase announcements from BTC",
+      "channel_06": "Coordination channel for naming conventions and squad locking",
+      "channel_02": "Q&A support for onboarding guidelines and administrative requests",
+      "channel_08": "Technical support for CVAT, Docker OPA 500 and GPU environments",
+      "channel_10": "Bot assistant inquiries, XP milestones, and daily standup window"
+    },
+    chips: [
+      { key: "naming", label: "Discord Naming Convention", query: "What is the mandatory Discord display name syntax?" },
+      { key: "phoenix", label: "5 Phoenix Onboarding Steps", query: "What are the 5 Phoenix onboarding steps and deadline?" },
+      { key: "standup", label: "Daily Standup XP Window", query: "What is the daily standup timeframe to get XP?" },
+      { key: "cvat", label: "CVAT Docker OPA 500 Fix", query: "How to fix CVAT container OPA healthcheck 500 error?" },
+      { key: "attendance", label: "Workshop vs University Absence", query: "Do Build Phase workshops count towards university class absences?" },
+      { key: "paperwork", label: "Urgent Stamped Paperwork Request", query: "How to request official stamped military deferment paperwork?" },
+      { key: "team_level", label: "Cross-level Team Formation", query: "Can learners from different levels join the same team?" },
+      { key: "outscope", label: "Out of scope query (Lunch)", query: "What dishes are available at the cafeteria today?" }
+    ]
+  }
+};
+
+let currentLang = "vi";
+let activeChannel = "channel_03";
+let activeFilter = "all";
+
+// -------------------------------------------------------------
+// ASSISTANT ENGINE WITH 5 STRICT TRUST & VERIFICATION STATES
+// 1. VERIFIED_OFFICIAL (Green)
+// 2. COMMUNITY_ANSWER (Blue)
+// 3. AMBIGUOUS_LOW_CONF (Yellow)
+// 4. ESCALATE_TA (Orange/Coral)
+// 5. NO_OFFICIAL_ANSWER (Red)
+// -------------------------------------------------------------
+function analyzeAndRespond(queryText) {
+  const q = queryText.toLowerCase().trim();
+
+  // 1. Naming Syntax -> VERIFIED_OFFICIAL
+  if (q.includes("đổi tên") || q.includes("đặt tên") || q.includes("cú pháp") || q.includes("naming") || q.includes("name") || q.includes("mã nhóm")) {
+    const src = k4Database.find(x => x.id === "M47011");
+    return {
+      state: "VERIFIED_OFFICIAL",
+      confidence: "99%",
+      sourceItem: src,
+      message_vi: "Theo thông báo chính thức từ BTC ([@D8938] tại `channel_06`), cú pháp đổi tên bắt buộc là:\n**[Mã Nhóm] - Họ và tên - [5 số cuối mã sinh viên]** (Ví dụ: `T001 - [HV] - [MSSV_5SO]`). Hạn chót hoàn tất trước 18:00 cùng ngày.",
+      message_en: "According to official BTC announcement ([@D8938] in `channel_06`), mandatory naming syntax is:\n**[Team Code] - Full Name - [Last 5 digits of Student ID]** (e.g. `T001 - [HV] - [MSSV_5SO]`). Deadline: before 18:00 today."
+    };
+  }
+
+  // 2. Phoenix Onboarding & 5 steps -> VERIFIED_OFFICIAL
+  if (q.includes("phoenix") || q.includes("onboarding") || q.includes("5 bước") || q.includes("ghép đội") || q.includes("21:00")) {
+    const src = k4Database.find(x => x.id === "M49744");
+    return {
+      state: "VERIFIED_OFFICIAL",
+      confidence: "98%",
+      sourceItem: src,
+      message_vi: "Căn cứ thông báo của BTC ([@D9617] tại `channel_03`), toàn bộ [HV] cần hoàn thành 5 bước kích hoạt Phoenix Platform (kích hoạt account, join tổ chức, clone base template). Hạn chót ghép đội tự do là **21:00 ngày 13/09/2026**.",
+      message_en: "Pursuant to official BTC notice ([@D9617] in `channel_03`), all [HV] must complete 5 initial Phoenix Platform steps. The open team formation deadline is **21:00 Sep 13, 2026**."
+    };
+  }
+
+  // 3. Gate 1 Deliverables -> VERIFIED_OFFICIAL
+  if (q.includes("gate 1") || q.includes("gate1") || q.includes("hạn nộp") || q.includes("deliverables")) {
+    const src = k4Database.find(x => x.id === "M01982");
+    return {
+      state: "VERIFIED_OFFICIAL",
+      confidence: "99%",
+      sourceItem: src,
+      message_vi: "Hạn nộp Gate 1 chính thức từ BTC là **23:59 ngày 20/09/2026**. Bộ sản phẩm bắt buộc gồm: AI Logbook cập nhật, Video demo kiến trúc dữ liệu và link Github repo clean branch.",
+      message_en: "Official Gate 1 submission deadline is **23:59 on Sep 20, 2026**. Required deliverables: updated AI Logbook, architecture demo video, and clean GitHub repo link."
+    };
+  }
+
+  // 4. Team Level Rule -> VERIFIED_OFFICIAL
+  if (q.includes("khác level") || q.includes("l2 và l3") || q.includes("khác trình độ") || q.includes("cross-level")) {
+    const src = k4Database.find(x => x.id === "M12507");
+    return {
+      state: "VERIFIED_OFFICIAL",
+      confidence: "96%",
+      sourceItem: src,
+      message_vi: "Quy định chính thức từ BTC ([@D8938]): Các [HV] trong cùng một đội **bắt buộc phải thuộc cùng Level đã xếp loại** (ví dụ L2 cùng L2, L3 cùng L3) để đồng nhất lộ trình và tiêu chí đánh giá Gate.",
+      message_en: "Official policy from BTC ([@D8938]): All [HV] within the same squad **must belong to the exact same classified Level** to ensure uniform project evaluation criteria."
+    };
+  }
+
+  // 5. Daily Standup XP Window -> COMMUNITY_ANSWER
+  if (q.includes("standup") || q.includes("xp") || q.includes("10h") || q.includes("daily")) {
+    const src = k4Database.find(x => x.id === "M78917");
+    return {
+      state: "COMMUNITY_ANSWER",
+      confidence: "94%",
+      sourceItem: src,
+      disclaimer_vi: "Lưu ý: Đây là kinh nghiệm và phản hồi thực tế từ cộng đồng [HV] & Lab Coach.",
+      disclaimer_en: "Note: This is community guidance recorded from [HV] learners & Lab Coaches.",
+      message_vi: "Khung giờ Daily Standup tính đủ 100% XP là từ **00:00 đến 10:00 sáng hàng ngày**. Sau 10:00 sáng, hệ thống tự động khóa sổ điểm XP của ngày hôm đó.",
+      message_en: "The Daily Standup window for 100% XP is strictly **00:00 to 10:00 AM daily**. After 10:00 AM, the bot locks daily XP score accumulation."
+    };
+  }
+
+  // 6. CVAT Docker OPA 500 error -> COMMUNITY_ANSWER
+  if (q.includes("cvat") || q.includes("opa") || q.includes("500") || q.includes("docker compose")) {
+    const src = k4Database.find(x => x.id === "M51326");
+    return {
+      state: "COMMUNITY_ANSWER",
+      confidence: "93%",
+      sourceItem: src,
+      disclaimer_vi: "Giải pháp kỹ thuật từ Lab Coach [@D6587] tại channel_08.",
+      disclaimer_en: "Technical troubleshooting provided by Lab Coach [@D6587] in channel_08.",
+      code: "docker compose down -v\ndocker compose up -d --wait\n# Chờ 45 giây rồi khởi tạo tài khoản:\ndocker exec -it cvat_server python manage.py createsuperuser",
+      message_vi: "Lỗi OPA healthcheck 500 thường xảy ra do OPA container khởi động trước backend hoặc RAM cấp cho Docker dưới 6GB. Các bước xử lý được hướng dẫn:",
+      message_en: "The OPA 500 error happens when Docker memory is <6GB or OPA launches before backend. Follow the verified commands:"
+    };
+  }
+
+  // 7. Workshop Attendance Rule -> COMMUNITY_ANSWER
+  if (q.includes("workshop") || q.includes("vắng trên lớp") || q.includes("chính quy") || q.includes("nghỉ học")) {
+    const src = k4Database.find(x => x.id === "M43132");
+    return {
+      state: "COMMUNITY_ANSWER",
+      confidence: "91%",
+      sourceItem: src,
+      disclaimer_vi: "Phản hồi hướng dẫn từ Lab Coach [@D3694] tại channel_02.",
+      disclaimer_en: "Advice provided by Lab Coach [@D3694] in channel_02.",
+      message_vi: "Các buổi Workshop Build Phase **không tính vào số buổi vắng trên lớp môn chính quy của trường**. Tuy nhiên, [HV] vẫn phải đạt tối thiểu 80% thời lượng tham gia để đủ điều kiện xét duyệt Gate đồ án.",
+      message_en: "Build Phase workshops **do NOT count against your official university course absence quota**. However, [HV] must maintain at least 80% attendance to qualify for Gate evaluations."
+    };
+  }
+
+  // 8. Urgent Paperwork, Medical leave, Military deferment -> ESCALATE_TA
+  if (q.includes("mộc đỏ") || q.includes("nghĩa vụ") || q.includes("giấy tờ") || q.includes("bảo lưu") || q.includes("xác nhận") || q.includes("hoãn")) {
+    const src = k4Database.find(x => x.id === "M80709");
+    return {
+      state: "ESCALATE_TA",
+      confidence: "95%",
+      sourceItem: src,
+      escalateMail: "AIthucchien@vinuni.edu.vn",
+      message_vi: "Các vấn đề về giấy xác nhận có mộc đỏ, đơn hoãn nghĩa vụ quân sự hoặc thủ tục bảo lưu cần chữ ký phê duyệt của Ban Điều phối. Vui lòng gửi email chính thức:",
+      message_en: "Official university stamped letters, military deferment certificates, or academic deferrals require manual verification by Cohort Coordinators. Please email:"
+    };
+  }
+
+  // 9. Ambiguous query -> AMBIGUOUS_LOW_CONF
+  if (q.includes("lịch") || q.includes("deadline") || q.includes("thời gian") || q.includes("schedule")) {
+    return {
+      state: "AMBIGUOUS_LOW_CONF",
+      confidence: "58%",
+      message_vi: "Hệ thống ghi nhận nhiều mốc thời gian khác nhau: bạn đang muốn tra cứu **Hạn Onboarding Phoenix (21:00 13/09)**, **Hạn chót Gate 1 (23:59 20/09)** hay **Khung giờ nộp Standup (0h-10h sáng)**? Vui lòng gõ chi tiết hơn.",
+      message_en: "Multiple schedule milestones match your query: are you asking about **Phoenix Onboarding Deadline (21:00 Sep 13)**, **Gate 1 Deadline (23:59 Sep 20)**, or **Daily Standup Window (00:00-10:00 AM)**? Please clarify."
+    };
+  }
+
+  // 10. Out of scope / restricted -> NO_OFFICIAL_ANSWER
+  return {
+    state: "NO_OFFICIAL_ANSWER",
+    confidence: "24%",
+    message_vi: "Chủ đề này không nằm trong cơ sở dữ liệu học thuật hoặc quy chế chương trình Cohort K4. Trợ lý bot chỉ cung cấp thông tin liên quan đến Onboarding, Kỹ thuật Lab CVAT/Docker và Đồ án Gate.",
+    message_en: "This inquiry is outside the official academic knowledge base of Cohort K4. The assistant exclusively addresses questions regarding Onboarding, Lab Tech, and Gate specifications."
+  };
+}
+
+// -------------------------------------------------------------
+// UI RENDERING
+// -------------------------------------------------------------
+const messagesContainer = document.getElementById("messagesContainer");
+const chipsRow = document.getElementById("chipsRow");
+const activeChannelHeader = document.getElementById("activeChannelHeader");
+const activeChannelDesc = document.getElementById("activeChannelDesc");
+
+function renderChips() {
+  const t = uiText[currentLang];
+  chipsRow.innerHTML = "";
+  t.chips.forEach(c => {
+    const btn = document.createElement("button");
+    btn.className = "quick-chip";
+    btn.innerHTML = `<span class="material-symbols-outlined" style="font-size:14px; color:var(--accent);">bolt</span><span>${c.label}</span>`;
+    btn.addEventListener("click", () => {
+      document.getElementById("queryInput").value = c.query;
+      handleUserSubmit();
+    });
+    chipsRow.appendChild(btn);
+  });
+}
+
+function renderChannelHeader() {
+  const t = uiText[currentLang];
+  activeChannelHeader.textContent = activeChannel;
+  activeChannelDesc.textContent = t.channelDescs[activeChannel] || "";
+}
+
+function getRoleBadge(role) {
+  if (role === "btc") return `<span class="role-badge role-btc">BTC K4</span>`;
+  if (role === "coach") return `<span class="role-badge role-coach">Lab Coach</span>`;
+  if (role === "student") return `<span class="role-badge role-student">Học viên</span>`;
+  if (role === "bot") return `<span class="role-badge role-bot">Bot</span>`;
+  return `<span class="role-badge role-student">Learner</span>`;
+}
+
+function getAvatarClass(role) {
+  if (role === "btc") return "avatar-btc";
+  if (role === "coach") return "avatar-coach";
+  if (role === "student") return "avatar-student";
+  if (role === "bot") return "avatar-bot";
+  return "avatar-user";
+}
+
+function renderMessages() {
+  const t = uiText[currentLang];
+  messagesContainer.innerHTML = `
+    <div class="channel-intro">
+      <div class="channel-intro-icon">#</div>
+      <h2>
+        <span>#${escapeHtml(activeChannel)}</span>
+        <span style="font-size:12px; font-weight:600; color:var(--text-muted); background:var(--bg-sidebar); padding:2px 8px; border-radius:12px; border:1px solid var(--border-subtle);">
+          ${escapeHtml(t.channelDescs[activeChannel] || "")}
+        </span>
+      </h2>
+      <p>Kênh tin nhắn đối chiếu trực tiếp từ tập dữ liệu k4_messages.csv đã chuẩn hóa theo DATA_DICTIONARY.md.</p>
+    </div>
+  `;
+
+  const filtered = k4Database.filter(m => {
+    if (m.channel !== activeChannel) return false;
+    if (activeFilter === "official") return m.type === "official";
+    if (activeFilter === "qa") return m.type === "qa";
+    return true;
+  });
+
+  filtered.forEach(item => {
+    const card = createMessageElement(item);
+    messagesContainer.appendChild(card);
+  });
+
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function createMessageElement(item) {
+  const t = uiText[currentLang];
+  const wrap = document.createElement("div");
+  wrap.className = "message-wrap";
+
+  let replyHtml = "";
+  if (item.replyTo) {
+    replyHtml = `
+      <div class="reply-context">
+        <span class="material-symbols-outlined" style="font-size:13px;">reply</span>
+        <span>${t.relyPrefix} <strong>@${escapeHtml(item.replyUser || "HV")}</strong></span>
+      </div>
+    `;
+  }
+
+  const textContent = currentLang === "en" ? (item.text_en || item.text) : item.text;
+  const avatarInitials = item.role === "bot" ? "🤖" : item.author.substring(0, 3);
+
+  let specialCardHtml = "";
+  if (item.type === "official") {
+    specialCardHtml = `
+      <div class="official-card">
+        <div class="official-card-header">
+          <span class="material-symbols-outlined" style="font-size:15px;">verified</span>
+          <span>${t.officialAnnouncement}</span>
+        </div>
+        <div style="font-size:13px; font-weight:600;">${formatMarkdown(textContent)}</div>
+        <button class="source-attribution-btn" onclick="openSourceModal('${item.id}')">
+          <span class="material-symbols-outlined" style="font-size:14px;">visibility</span>
+          <span>${t.viewSource} [${item.id}]</span>
+        </button>
+      </div>
+    `;
+  }
+
+  wrap.innerHTML = `
+    ${replyHtml}
+    <div class="message-row">
+      <div class="avatar ${getAvatarClass(item.role)}">${avatarInitials}</div>
+      <div class="message-content">
+        <div class="author-line">
+          <span class="author-id-code">${escapeHtml(item.author)}</span>
+          ${getRoleBadge(item.role)}
+          <span class="msg-time">${escapeHtml(item.timestamp)}</span>
+          <span class="msg-id">#${escapeHtml(item.id)}</span>
+        </div>
+        ${item.type === "official" ? specialCardHtml : `
+          <div class="msg-text">${formatMarkdown(textContent)}</div>
+          <div>
+            <button class="source-attribution-btn" onclick="openSourceModal('${item.id}')">
+              <span class="material-symbols-outlined" style="font-size:13px;">search_check</span>
+              <span>${t.viewSource} [${item.id}]</span>
+            </button>
+          </div>
+        `}
+      </div>
+    </div>
+  `;
+
+  return wrap;
+}
+
+// -------------------------------------------------------------
+// USER SUBMISSION & ASSISTANT RESPONSE HANDLING
+// -------------------------------------------------------------
+const liveCitations = new Map();
+let requestInFlight = false;
+
+function stateVisual(state) {
+  const visuals = {
+    VERIFIED_OFFICIAL: { className: "VERIFIED_OFFICIAL", icon: "verified" },
+    CLARIFY: { className: "AMBIGUOUS_LOW_CONF", icon: "warning" },
+    NOT_FOUND: { className: "NO_OFFICIAL_ANSWER", icon: "cancel" },
+    REFUSE: { className: "ESCALATE_TA", icon: "support_agent" },
+    REDIRECT_ACADEMIC: { className: "COMMUNITY_ANSWER", icon: "school" }
+  };
+  return visuals[state] || visuals.NOT_FOUND;
+}
+
+async function handleUserSubmit() {
+  const input = document.getElementById("queryInput");
+  const val = input.value.trim();
+  if (!val || requestInFlight) return;
+
+  requestInFlight = true;
+  const t = uiText[currentLang];
+  const now = new Date();
+  const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+  const userMsgWrap = document.createElement("div");
+  userMsgWrap.className = "message-wrap";
+  userMsgWrap.innerHTML = `
+    <div class="message-row">
+      <div class="avatar avatar-user">HV</div>
+      <div class="message-content">
+        <div class="author-line">
+          <span class="author-id-code">[HV] Nguyễn Trọng Minh</span>
+          <span class="role-badge role-student">2A202602496</span>
+          <span class="msg-time">${timeStr}</span>
+        </div>
+        <div class="msg-text">${escapeHtml(val)}</div>
+      </div>
+    </div>
+  `;
+  messagesContainer.appendChild(userMsgWrap);
+  input.value = "";
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+  const typingWrap = document.createElement("div");
+  typingWrap.className = "message-wrap";
+  typingWrap.id = "activeTypingIndicator";
+  typingWrap.innerHTML = `
+    <div class="message-row">
+      <div class="avatar avatar-bot">BOT</div>
+      <div class="message-content">
+        <div class="author-line">
+          <span class="author-id-code">BOT Assistant</span>
+          <span class="role-badge role-bot">${t.botRole}</span>
+        </div>
+        <div class="typing-indicator"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  `;
+  messagesContainer.appendChild(typingWrap);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+  let result;
+  try {
+    const response = await fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: val })
+    });
+    if (!response.ok) throw new Error(`API ${response.status}`);
+    result = await response.json();
+  } catch (error) {
+    result = {
+      answer: "Không kết nối được máy chủ demo. Bạn vui lòng kiểm tra lại ứng dụng hoặc hỏi Lab Coach.",
+      state: "NOT_FOUND",
+      confidence: "none",
+      citations: [],
+      trace: { tool_called: false, result_count: 0 }
+    };
+  } finally {
+    const typingElem = document.getElementById("activeTypingIndicator");
+    if (typingElem) typingElem.remove();
+    requestInFlight = false;
+  }
+
+  const visual = stateVisual(result.state);
+  const citations = Array.isArray(result.citations) ? result.citations : [];
+  citations.forEach(citation => liveCitations.set(citation.msg_id, citation));
+  const sourceBtnHtml = citations.map(citation => `
+    <button class="source-attribution-btn" onclick="openSourceModal('${escapeHtml(citation.msg_id)}')">
+      <span class="material-symbols-outlined" style="font-size:14px;">verified</span>
+      <span>${escapeHtml(t.viewSource)}: [${escapeHtml(citation.msg_id)}]</span>
+    </button>
+  `).join("");
+  const noCitationNotice = citations.length === 0
+    ? `<div style="font-size:11.5px;color:var(--text-muted);margin-top:7px;font-style:italic;">Không có bản ghi bot-authoritative (${escapeHtml("is_bot=True")}) hỗ trợ câu trả lời này.</div>`
+    : "";
+
+  const botMsgWrap = document.createElement("div");
+  botMsgWrap.className = "message-wrap";
+  botMsgWrap.innerHTML = `
+    <div class="message-row">
+      <div class="avatar avatar-bot">BOT</div>
+      <div class="message-content">
+        <div class="author-line">
+          <span class="author-id-code">BOT Assistant</span>
+          <span class="role-badge role-bot">${t.botRole}</span>
+          <span class="msg-time">${timeStr}</span>
+        </div>
+        <div class="assistant-response-box">
+          <div class="ai-meta-bar">
+            <div class="ai-status-group">
+              <span class="state-badge ${visual.className}">
+                <span class="material-symbols-outlined" style="font-size:14px;">${visual.icon}</span>
+                <span>${escapeHtml(result.state || "NOT_FOUND")}</span>
+              </span>
+              <span class="confidence-pill">Confidence: ${escapeHtml(result.confidence || "none")}</span>
+            </div>
+            <span style="font-size:10.5px;color:var(--text-muted);font-family:JetBrains Mono;">LIVE GEMINI + LOCAL TOOL</span>
+          </div>
+          <div class="msg-text">${formatMarkdown(result.answer || "Không có câu trả lời.")}</div>
+          ${sourceBtnHtml}
+          ${noCitationNotice}
+        </div>
+      </div>
+    </div>
+  `;
+  messagesContainer.appendChild(botMsgWrap);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function handleCreateTicket() {
+  const t = uiText[currentLang];
+  alert(t.ticketCreatedAlert);
+}
+
+// -------------------------------------------------------------
+// SOURCE / GROUND TRUTH MODAL
+// -------------------------------------------------------------
+const sourceModal = document.getElementById("sourceModal");
+const closeModalBtn = document.getElementById("closeModalBtn");
+
+function openSourceModal(msgId) {
+  const citation = liveCitations.get(msgId);
+  if (!citation) return;
+
+  document.getElementById("evidenceId").textContent = citation.msg_id;
+  document.getElementById("evidenceText").textContent = citation.excerpt || "Không có đoạn trích hiển thị.";
+  document.getElementById("evidenceAuthor").textContent = "BOT [is_bot=True]";
+  document.getElementById("evidenceChannel").textContent = `#${citation.channel_id || "channel_10"}`;
+  document.getElementById("evidenceGuild").textContent = "Anonymized Discord pack";
+  document.getElementById("evidenceTimestamp").textContent = citation.timestamp || "—";
+
+  const trustElem = document.getElementById("evidenceTrust");
+  trustElem.className = "state-badge VERIFIED_OFFICIAL";
+  trustElem.textContent = citation.trust || "BOT_OFFICIAL";
+
+  sourceModal.classList.add("open");
+}
+
+closeModalBtn.addEventListener("click", () => sourceModal.classList.remove("open"));
+sourceModal.addEventListener("click", e => {
+  if (e.target === sourceModal) sourceModal.classList.remove("open");
+});
+
+// -------------------------------------------------------------
+// CHANNEL & FILTER INTERACTION
+// -------------------------------------------------------------
+document.querySelectorAll(".channel-item").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".channel-item").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeChannel = btn.dataset.channel;
+    renderChannelHeader();
+    renderMessages();
+  });
+});
+
+document.querySelectorAll(".filter-pill").forEach(pill => {
+  pill.addEventListener("click", () => {
+    document.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+    pill.classList.add("active");
+    activeFilter = pill.dataset.filter;
+    renderMessages();
+  });
+});
+
+document.getElementById("sendQueryBtn").addEventListener("click", handleUserSubmit);
+document.getElementById("queryInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") handleUserSubmit();
+});
+
+// -------------------------------------------------------------
+// LOCALIZATION & THEME CONTROLS
+// -------------------------------------------------------------
+const langSwitchBtn = document.getElementById("langSwitchBtn");
+const langDisplay = document.getElementById("langDisplay");
+langSwitchBtn.addEventListener("click", () => {
+  currentLang = currentLang === "vi" ? "en" : "vi";
+  document.documentElement.lang = currentLang;
+  langDisplay.textContent = currentLang === "vi" ? "VI / EN" : "EN / VI";
+  applyTranslations();
+});
+
+function applyTranslations() {
+  const t = uiText[currentLang];
+  document.getElementById("lblLeader").textContent = t.lblLeader;
+  document.getElementById("secAnnouncements").textContent = t.secAnnouncements;
+  document.getElementById("secSupport").textContent = t.secSupport;
+  document.getElementById("filterAll").textContent = t.filterAll;
+  document.getElementById("filterOfficial").textContent = t.filterOfficial;
+  document.getElementById("filterQA").textContent = t.filterQA;
+  document.getElementById("queryInput").placeholder = t.inputPlaceholder;
+  document.getElementById("sendQueryBtn").querySelector("span:first-child").textContent = t.sendBtn;
+  document.getElementById("footerDesc").textContent = t.footerDesc;
+
+  renderChips();
+  renderChannelHeader();
+  renderMessages();
+}
+
+// Theme Toggle
+const themeToggleBtn = document.getElementById("themeToggleBtn");
+const themeIcon = document.getElementById("themeIcon");
+const themeText = document.getElementById("themeText");
+
+themeToggleBtn.addEventListener("click", () => {
+  const currentTheme = document.documentElement.getAttribute("data-theme");
+  const nextTheme = currentTheme === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", nextTheme);
+  themeIcon.textContent = nextTheme === "dark" ? "light_mode" : "dark_mode";
+  themeText.textContent = nextTheme === "dark" ? "Light" : "Dark";
+});
+
+// Text formatting & sanitizer
+function formatMarkdown(str) {
+  if (!str) return "";
+  let esc = escapeHtml(str);
+
+  // Bold
+  esc = esc.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+  // Mentions
+  esc = esc.replace(/(@\[D\d+\]|@\[BOT\]|@\[everyone\]|@everyone|@\[role\])/g, '<span class="mention-tag">$1</span>');
+
+  // Student token [HV]
+  esc = esc.replace(/\[HV\]/g, '<span class="token-hv">[HV]</span>');
+
+  // Inline backticks
+  esc = esc.replace(/`(.*?)`/g, '<code style="background:var(--code-bg); padding:1px 5px; border-radius:4px; font-family:JetBrains Mono;">$1</code>');
+
+  // Newlines
+  esc = esc.replace(/\n/g, '<br/>');
+  return esc;
+}
+
+function escapeHtml(text) {
+  if (!text) return "";
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// Initial Boot
+applyTranslations();
+</script>
+</body></html>

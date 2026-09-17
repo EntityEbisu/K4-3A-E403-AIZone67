@@ -1,0 +1,29 @@
+# Environment secrets
+.env
+*.env
+!.env.example
+
+# Bot message index (git-ignored if built from real CSV)
+codebase/backend/knowledge/bot_messages_index.json
+
+# Local traces
+codebase/traces/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

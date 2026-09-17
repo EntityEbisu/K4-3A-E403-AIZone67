@@ -8,10 +8,10 @@
 
 | Họ và Tên | Mã Học Viên | Vai trò chính | Phần việc đảm nhiệm trong dự án |
 |---|---|---|---|
-| Nguyễn Trọng Minh | 2A202602496 | Writer, Lead | Development Cooperation |
-| Lê Mạnh Cường | 2A202602604  | Dev | Development Cooperation |
-| Nguyễn Việt Hùng | 2A202602972 | Dev | Development Cooperation |
-| Trần Quốc Khánh | 2A202602824 | Dev | Development Cooperation |
+| Nguyễn Trọng Minh | 2A202602496 | Writer, Lead Dev| Development Cooperation |
+| Lê Mạnh Cường | 2A202602604  | Tests & Evals Dev| Development Cooperation |
+| Nguyễn Việt Hùng | 2A202602972 | UXUI Dev, Tool Dev | Development Cooperation |
+| Trần Quốc Khánh | 2A202602824 | User Survey, Business Analyst | Development Cooperation |
 
 > Nhóm copy nguyên file README này về repo của mình, rồi điền bảng trên. Cột **Phần việc đảm nhiệm** ghi càng cụ thể càng tốt.
 
